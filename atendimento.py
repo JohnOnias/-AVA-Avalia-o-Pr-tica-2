@@ -45,16 +45,52 @@ def salvar_atendimento(medico, paciente, data):
 
     return atendimento
 
-def mostrar_medicos(lista_medico):
-    for lista in lista_medico:
-       print(f"Nome: {lista.nome} | CRM: {lista.crm}")
+def mostrar_atendimento(lista_atendimento):
+    for lista in lista_atendimento:
+       print(f"############## ATENDIMENTO  DO DIA {lista.data} ############### ")
+       
+       print("------------------------------------------------")
+       print("DADOS DO MÉDICO")
+       print(f"Nome: {lista.medico.nome}")
+       print(f"CRM: {lista.medico.crm}")
+       print("-------------------------------------------------")
+       
+       print("\n")
+       
+       print("-------------------------------------------------")
+       print("DADOS DO PACIENTE")
+       print("Nome:",lista.paciente.nome)
+       print("CPF:",lista.paciente.cpf)
+       print("Rua:",lista.paciente.rua)
+       print("--------------------------------------------------")
 
 def filtrar_medico(crm, lista_medico):
-    for lista in lista_medico:
+    for index, lista in enumerate(lista_medico):
         if lista.crm == crm:
-            return True
+            return lista_medico[index]
+        
 
-    return False
+    return None
+
+def filtrar_paciente(cpf, lista_pacientes):
+    for index, lista in enumerate(lista_pacientes):
+        if lista.cpf == cpf:
+            return lista_pacientes[index]
+
+    return None
+
+def buscar_atendimento(crm, lista_atendimento):
+    for lista in lista_atendimento:
+        if lista.medico.crm == crm:
+                print(f"############## ATENDIMENTO  DO DIA {lista.data} ############### ")
+                print("-------------------------------------------------")
+                print("DADOS DO PACIENTE")
+                print("Nome:",lista.paciente.nome)
+                print("CPF:",lista.paciente.cpf)
+                print("Rua:",lista.paciente.rua)
+                print("--------------------------------------------------")
+                print("\n")
+            
 
 
 opt = 0
@@ -64,11 +100,13 @@ lista_paciente = []
 medico = None
 paciente = None
 
-while opt != 5:
+while opt != -1:
     print("[1] - Cadastrar Médico")
     print("[2] - Cadastrar Paciente")
-    print("[3] - Cadastrar Salvar Atendimento")
-    print("[4] - Mostrar todos os médicos: ")
+    print("[3] - Salvar Atendimento")
+    print("[4] - Mostrar todos os atendimentos: ")
+    print("[5] - Buscar atendimento")
+    print("[-1] - Encerrar")
     opt = int(input("Escolha: "))
 
     match opt:
@@ -80,13 +118,22 @@ while opt != 5:
             lista_paciente.append(paciente)
         case 3:
             crm = input("Informe o crm do medico: ")
-            if filtrar_medico(crm, lista_medico):
+            cpf = input("Digite o cpf do paciente: ")
+            
+            filtro_paciente = filtrar_paciente(cpf, lista_paciente)
+            filtro_medico  =  filtrar_medico(crm, lista_medico)
+            
+            if filtro_medico and filtro_paciente:
                 data = input("Informe a data: ")
                 atendimento = salvar_atendimento(medico, paciente, data)
                 lista_atendimento.append(atendimento)
-                print("Atendimento adicionado!")
             else:
-                print("Medico não existe")
+                print("Medico ou paciente não existe")
         case 4:
-            mostrar_medicos(lista_medico)
+            mostrar_atendimento(lista_atendimento)
+        
+        case 5:
+            crm = input("Digite o crm do médico: ")
+            buscar_atendimento(crm, lista_atendimento)
+        
         
