@@ -1,96 +1,108 @@
-
+# classe Medico com atributos nome e crm
 class Medico:
-    nome:None
-    crm: None
+    def __init__(self, nome=None, crm=None):
+        self.nome = nome
+        self.crm = crm
 
+
+# classe Paciente com vários atributos pessoais
 class Paciente:
-    nome:None
-    cpf:None
-    telefone: None
-    numero:None
-    rua:None
-    bairro:None
+    def __init__(self, nome=None, cpf=None, telefone=None, numero=None, rua=None, bairro=None):
+        self.nome = nome
+        self.cpf = cpf
+        self.telefone = telefone
+        self.numero = numero
+        self.rua = rua
+        self.bairro = bairro
 
+
+# classe Atendimento cria uma especie de relacao Medico/paciente
 class Atendimento:
-    medico:Medico
-    paciente:Paciente
-    data_atendimento: None
+    def __init__(self, medico=None, paciente=None, data_do_atendimento=None):
+        self.medico = medico
+        self.paciente = paciente
+        self.data_do_atendimento = data_do_atendimento
 
 
+
+# cadastra um médico e retorna o objeto Médico criado
 def cadastro_medico():
     print("############# CADASTRO DO MÉDICO ##########")
-    medico = Medico()
-    medico.nome = input("Digite o nome: ")
-    medico.crm = input("Digite o crm do médico: ")
-    
-    return medico
+    nome = input("Digite o nome do medico: ")
+    crm = input("Digite o crm do médico: ")
 
+
+    return Medico(nome, crm)  # Cria e retorna um objeto Medico
+
+
+# cadastrar um paciente e retorna o objeto Paciente criado
 def cadastro_paciente():
     print("############ CADASTRO DO PACIENTE ##########")
-    paciente = Paciente()
-    paciente.nome = input("Digite o nome do paciente: ")
-    paciente.cpf = input("Digite o cpf do paciente: ")
-    paciente.telefone = input("Digite o telefone do paciente: ")
-    paciente.numero = input("Digite o numero da rua: ")
-    paciente.rua = input("Digite o nome da rua: ")
-    paciente.bairro = input("Digite o nome do bairro: ")
-    
-    return paciente
+    nome = input("Digite o nome do paciente: ")
+    cpf = input("Digite o cpf do paciente: ")
+    telefone = input("Digite o telefone do paciente: ")
+    rua = input("Digite o nome da rua: ")
+    numero = input("Digite o numero da casa: ")
+    bairro = input("Digite o nome do bairro: ")
 
-def salvar_atendimento(medico, paciente, data):
-    atendimento = Atendimento()
-    atendimento.data = data
-    atendimento.medico = medico
-    atendimento.paciente = paciente
 
-    return atendimento
+    return Paciente(nome, cpf, telefone, numero, rua, bairro)
 
+
+#criar um atendimento e retorna o objeto Atendimento criado
+def salvar_atendimento(medico, paciente, data_do_atendimento):
+
+    return Atendimento(medico, paciente, data_do_atendimento)
+
+# mostra todos os atendimentos na lista
 def mostrar_atendimento(lista_atendimento):
-    for lista in lista_atendimento:
-       print(f"############## ATENDIMENTO  DO DIA {lista.data} ############### ")
-       
-       print("------------------------------------------------")
-       print("DADOS DO MÉDICO")
-       print(f"Nome: {lista.medico.nome}")
-       print(f"CRM: {lista.medico.crm}")
-       print("-------------------------------------------------")
-       
-       print("\n")
-       
-       print("-------------------------------------------------")
-       print("DADOS DO PACIENTE")
-       print("Nome:",lista.paciente.nome)
-       print("CPF:",lista.paciente.cpf)
-       print("Rua:",lista.paciente.rua)
-       print("--------------------------------------------------")
+    for atendimento in lista_atendimento:
+        print(f"############## ATENDIMENTO  DO DIA {atendimento.data_do_atendimento} ############### ")
+        print("------------------------------------------------")
+        print("DADOS DO MÉDICO")
+        print(f"Nome: {atendimento.medico.nome}")
+        print(f"CRM: {atendimento.medico.crm}")
+        print("-------------------------------------------------")
+        print("DADOS DO PACIENTE")
+        print(f"Nome: {atendimento.paciente.nome}")
+        print(f"CPF: {atendimento.paciente.cpf}")
+        print(f"Rua: {atendimento.paciente.rua}")
+        print(f"Numero: {atendimento.paciente.numero}")
+        print(f"Bairro: {atendimento.paciente.bairro}")
+        print(f"Telefone: {atendimento.paciente.telefone}")
+        print("--------------------------------------------------")
+        print("\n")
 
+
+# filtra um médico da lista baseado no CRM
 def filtrar_medico(crm, lista_medico):
-    for index, lista in enumerate(lista_medico):
-        if lista.crm == crm:
-            return lista_medico[index]
-        
-
+    for medico in lista_medico:
+        if medico.crm == crm:
+            return medico
     return None
 
-def filtrar_paciente(cpf, lista_pacientes):
-    for index, lista in enumerate(lista_pacientes):
-        if lista.cpf == cpf:
-            return lista_pacientes[index]
 
+#filtra um paciente da lista baseado no CPF
+def filtrar_paciente(cpf, lista_paciente):
+    for paciente in lista_paciente:
+        if paciente.cpf == cpf:
+            return paciente
     return None
 
+
+#busca e mostra os atendimentos de um médico específico baseado no CRM
 def buscar_atendimento(crm, lista_atendimento):
-    for lista in lista_atendimento:
-        if lista.medico.crm == crm:
-                print(f"############## ATENDIMENTO  DO DIA {lista.data} ############### ")
-                print("-------------------------------------------------")
-                print("DADOS DO PACIENTE")
-                print("Nome:",lista.paciente.nome)
-                print("CPF:",lista.paciente.cpf)
-                print("Rua:",lista.paciente.rua)
-                print("--------------------------------------------------")
-                print("\n")
-            
+    for atendimento in lista_atendimento:
+        if atendimento.medico.crm == crm:
+            print(f"############## ATENDIMENTO  DO DIA {atendimento.data_do_atendimento} ############### ")
+            print("-------------------------------------------------")
+            print("DADOS DO PACIENTE")
+            print(f"Nome: {atendimento.paciente.nome}")
+            print(f"CPF: {atendimento.paciente.cpf}")
+            print(f"Rua: {atendimento.paciente.rua}")
+            print("--------------------------------------------------")
+            print("\n")
+
 
 
 opt = 0
@@ -100,11 +112,13 @@ lista_paciente = []
 medico = None
 paciente = None
 
+# Loop principal do menu
 while opt != -1:
+    print('-' * 40)
     print("[1] - Cadastrar Médico")
     print("[2] - Cadastrar Paciente")
     print("[3] - Salvar Atendimento")
-    print("[4] - Mostrar todos os atendimentos: ")
+    print("[4] - Mostrar todos os atendimentos")
     print("[5] - Buscar atendimento")
     print("[-1] - Encerrar")
     opt = int(input("Escolha: "))
@@ -117,23 +131,20 @@ while opt != -1:
             paciente = cadastro_paciente()
             lista_paciente.append(paciente)
         case 3:
-            crm = input("Informe o crm do medico: ")
+            crm = input("Informe o crm do médico: ")
             cpf = input("Digite o cpf do paciente: ")
-            
+
             filtro_paciente = filtrar_paciente(cpf, lista_paciente)
-            filtro_medico  =  filtrar_medico(crm, lista_medico)
-            
+            filtro_medico = filtrar_medico(crm, lista_medico)
+
             if filtro_medico and filtro_paciente:
-                data = input("Informe a data: ")
-                atendimento = salvar_atendimento(medico, paciente, data)
+                data = input("Informe a data (dd/mm/aaaa): ")
+                atendimento = salvar_atendimento(filtro_medico, filtro_paciente, data)
                 lista_atendimento.append(atendimento)
             else:
-                print("Medico ou paciente não existe")
+                print("Médico ou paciente não existe")
         case 4:
             mostrar_atendimento(lista_atendimento)
-        
         case 5:
             crm = input("Digite o crm do médico: ")
             buscar_atendimento(crm, lista_atendimento)
-        
-        
